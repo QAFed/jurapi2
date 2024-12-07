@@ -1,10 +1,10 @@
 from base_class import Base
-import requests 
-from config import Config
+import requests
+from config import ConfigCl
 
 
 class ClearDB(Base):
     endpoint = "/clearDB"
 
     def clear_db(self):
-        self.response = requests.post(Config.API_HOST+self.endpoint)
+        self.response = requests.post(ConfigCl.HOST_API+self.endpoint)
