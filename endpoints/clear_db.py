@@ -1,4 +1,4 @@
-from base_class import Base
+from endpoints.base_class import Base
 import requests
 from config import ConfigCl
 

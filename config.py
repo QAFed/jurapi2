@@ -1,2 +1,2 @@
 class ConfigCl:
-    HOST_API = "http://192.168.61.19"
+    HOST_API = "http://192.168.61.19:3907"
