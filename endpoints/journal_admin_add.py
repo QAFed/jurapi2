@@ -10,7 +10,7 @@ class AdminAdd(Base):
         self.response = requests.put(ConfigCl.HOST_API+self.endpoint, json=payload)
         self.send_payload = payload
 
-    def assert_payload_n_response(self):
+    def compare_payload_n_response(self):
         mod_response = self.response.json()
         mod_response.pop('id')
         if self.send_payload["extInfo"] == None:

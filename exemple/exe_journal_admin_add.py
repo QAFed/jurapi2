@@ -12,5 +12,5 @@ PAYLOAD = {
 add_admin_event = AdminAdd()
 add_admin_event.send_request(PAYLOAD)
 add_admin_event.check_status_code(200)
-add_admin_event.assert_payload_n_response()
+add_admin_event.compare_payload_n_response()
 print(add_admin_event.response.json()["id"])
