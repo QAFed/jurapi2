@@ -5,7 +5,6 @@ from deepdiff import DeepDiff
 
 class AdminAdd(Base):
     endpoint = "/journal/admin"
-    send_payload = None
 
     def send_request(self, payload):
         self.response = requests.put(ConfigCl.HOST_API+self.endpoint, json=payload)
@@ -20,13 +19,6 @@ class AdminAdd(Base):
         if diff:
             raise AssertionError(diff)
         assert not diff
-
-        # try:
-        #     diff = DeepDiff(self.send_payload, mod_response, ignore_order=True)
-        #     if diff:
-        #         raise AssertionError(diff)
-        # except AssertionError as e:
-        #     print(f"Assertion failed: {e}")
 
 
 
