@@ -15,7 +15,7 @@ class EventGenerator:
         self.sortBy = sort_by or random.choice(["adminId", "time", "host", "sessionId"])
         self.ctime = ctime
 
-    def get_dict_filter(self):
+    def get_dict_filter_adm(self):
         return {
             'eventTimeFrom': self.eventTimeFrom,
             'eventTimeTo': self.eventTimeTo,
@@ -28,9 +28,9 @@ class EventGenerator:
             'sortBy': self.sortBy
                 }
 
-    def get_dict_reg_event(self):
+    def get_dict_reg_event_adm(self):
         return {
-            "eventTypeId": 0,
+            "eventTypeId": 1,
             "ctime": self.ctime or random.choice(range(self.eventTimeFrom, self.eventTimeTo+1)),
             "extInfo": self.info,
             "host": self.ip,
