@@ -1,7 +1,9 @@
+import allure
 import pytest
 from generators.event_generator import EventGenerator
 from endpoints.journal_admin_add import AdminAdd
 
+@allure.suite('Test_pos_Admin_add')
 class TestPosAdminAdd:
 
     @pytest.mark.parametrize('eventTipeId',[
