@@ -27,12 +27,12 @@ class SerialSender:
             self.exp_list.append(mod_num_payload)
 
     def create_custom_page(self):
-        if self.num_data.sortBy == "time":
+        if self.num_data.sort_by == "time":
             filter_sort_by = "ctime"
         else:
-            filter_sort_by = self.num_data.sortBy
+            filter_sort_by = self.num_data.sort_by
 
-        filtered_list= sorted(self.exp_list, key=lambda x: x[filter_sort_by], reverse=self.num_data.sortOrder=="desc")
+        filtered_list= sorted(self.exp_list, key=lambda x: x[filter_sort_by], reverse=self.num_data.sort_order == "desc")
 
         len_list = len(filtered_list)
         num_page = self.page_params["page"]
