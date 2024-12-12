@@ -18,6 +18,8 @@ class EventGenerator:
         for k, v in locals().items():
             if v == 0:
                 setattr(self, k, 0)
+            if v == "":
+                setattr(self, k, "")
 
     def get_dict_filter_adm(self):
         return {

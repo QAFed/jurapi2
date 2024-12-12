@@ -13,7 +13,7 @@ class AdminAdd(Base):
     def compare_payload_n_response(self):
         mod_response = self.response.json()
         mod_response.pop('id')
-        if self.send_payload["extInfo"] == None:
+        if self.send_payload.get("extInfo", 1) is None:
             self.send_payload.pop("extInfo")
         diff = DeepDiff(self.send_payload, mod_response, ignore_order=True)
         if diff:
