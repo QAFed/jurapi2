@@ -91,3 +91,20 @@ class TestPosAdminAdd:
         admin_add.send_request(mod_diction)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
+
+class TestNegAdminAdd:
+    @pytest.mark.parametrize('pop_param', [
+        "eventTypeId",
+        "ctime",
+        "host",
+        "adminId",
+        "sessionId"
+    ])
+    def test_status_code_if_one_param_not_send(self, pop_param):
+        gen_data = EventGenerator()
+        mod_diction = gen_data.get_dict_reg_event_adm()
+        mod_diction.pop(pop_param)
+        admin_add = AdminAdd()
+        admin_add.send_request(mod_diction)
+        admin_add.check_status_code(400)
+
