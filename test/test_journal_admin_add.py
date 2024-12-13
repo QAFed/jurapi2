@@ -108,3 +108,35 @@ class TestNegAdminAdd:
         admin_add.send_request(mod_diction)
         admin_add.check_status_code(400)
 
+    @pytest.mark.parametrize('eventTipeId', [
+        -2147483648,
+        2147483648,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_gz_event_type_id(self, eventTipeId):
+        gen_data = EventGenerator(action_type=eventTipeId)
+        admin_add = AdminAdd()
+        admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        admin_add.check_status_code(400)
+        print(f"REQUEST: {gen_data.get_dict_reg_event_adm()}")
+        print(f"RESPONSE: {admin_add.response.json()}")
+
+    @pytest.mark.parametrize('adminId', [
+        [-2147483648],
+        [2147483648],
+        ["Cтрока Strora"],
+        [{'slo': 'var'}],
+        [["spisok", 1]],
+        [""]
+    ])
+    def test_status_code_gz_admin_id(self, adminId):
+        gen_data = EventGenerator(admin_ids=adminId)
+        admin_add = AdminAdd()
+        admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        admin_add.check_status_code(400)
+        print(f"REQUEST: {gen_data.get_dict_reg_event_adm()}")
+        print(f"RESPONSE: {admin_add.response.json()}")
+
