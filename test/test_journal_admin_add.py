@@ -16,6 +16,10 @@ class TestPosAdminAdd:
         gen_data = EventGenerator(action_type=eventTipeId)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -27,6 +31,10 @@ class TestPosAdminAdd:
         gen_data = EventGenerator(ctime=ctime)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -38,10 +46,14 @@ class TestPosAdminAdd:
         "254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Si",
         "255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255"
     ])
-    def test_gz_ctime(self, host):
+    def test_gz_host(self, host):
         gen_data = EventGenerator(ip=host)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -54,6 +66,10 @@ class TestPosAdminAdd:
         gen_data = EventGenerator(admin_ids=admin_ids)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -69,6 +85,10 @@ class TestPosAdminAdd:
         gen_data = EventGenerator(session_id=session_id)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -80,6 +100,10 @@ class TestPosAdminAdd:
         gen_data = EventGenerator(info=info)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -89,6 +113,10 @@ class TestPosAdminAdd:
         mod_diction.pop("extInfo")
         admin_add = AdminAdd()
         admin_add.send_request(mod_diction)
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
@@ -106,6 +134,10 @@ class TestNegAdminAdd:
         mod_diction.pop(pop_param)
         admin_add = AdminAdd()
         admin_add.send_request(mod_diction)
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(400)
 
     @pytest.mark.parametrize('eventTipeId', [
@@ -120,9 +152,11 @@ class TestNegAdminAdd:
         gen_data = EventGenerator(action_type=eventTipeId)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(400)
-        print(f"REQUEST: {gen_data.get_dict_reg_event_adm()}")
-        print(f"RESPONSE: {admin_add.response.json()}")
 
     @pytest.mark.parametrize('adminId', [
         [-2147483648],
@@ -136,7 +170,8 @@ class TestNegAdminAdd:
         gen_data = EventGenerator(admin_ids=adminId)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure.attach(str(gen_data.get_dict_reg_event_adm()), name="request by text",
+                      attachment_type=allure.attachment_type.JSON)
+        allure.attach(admin_add.response.text, name="response",
+                      attachment_type=allure.attachment_type.JSON)
         admin_add.check_status_code(400)
-        print(f"REQUEST: {gen_data.get_dict_reg_event_adm()}")
-        print(f"RESPONSE: {admin_add.response.json()}")
-
