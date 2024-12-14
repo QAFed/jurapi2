@@ -16,7 +16,8 @@ class TestPosAdminGetByFilter:
         get_by_filter = AdminGetByFilter()
         get_by_filter.send_request(serial_sender.payload_filter, serial_sender.page_params)
         allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
-                                              request_params=serial_sender.page_params)
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
