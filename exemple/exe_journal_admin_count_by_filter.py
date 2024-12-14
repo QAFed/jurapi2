@@ -1,4 +1,4 @@
-from endpoints.journal_admin_count import AdminCountByFilter
+from endpoints.journal_admin_count_by_filter import AdminCountByFilter
 
 PAYLOAD = {
             'eventTimeFrom': 0,

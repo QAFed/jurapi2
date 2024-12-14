@@ -7,12 +7,12 @@ class SerialSender:
         "adm": AdminAdd
     }
 
-    def __init__(self, event_type, ext_data={}, page_params={'page': 0, 'pageSize': 2}):
+    def __init__(self, event_type, ext_data=None, page_params=None):
         self.choise_class = event_type
-        self.ext_data = ext_data
+        self.ext_data = ext_data or {}
         self.exp_list = []
         self.num_data = EventGenerator(**self.ext_data)
-        self.page_params = page_params
+        self.page_params = page_params or {'page': 0, 'pageSize': 2}
         self.final_page = None
         self.payload_filter = getattr(self.num_data, f'get_dict_filter_{self.choise_class}')()
 
