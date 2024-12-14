@@ -109,7 +109,7 @@ class TestNegAdminAdd:
         "adminId",
         "sessionId"
     ])
-    def test_status_code_if_one_param_not_send(self, pop_param, allure_attach_request_n_response_body):
+    def test_status_code_400_if_one_param_not_send(self, pop_param, allure_attach_request_n_response_body):
         gen_data = EventGenerator()
         mod_diction = gen_data.get_dict_reg_event_adm()
         mod_diction.pop(pop_param)
@@ -126,7 +126,7 @@ class TestNegAdminAdd:
         ["spisok", 1],
         ""
     ])
-    def test_status_code_gz_event_type_id(self, eventTipeId, allure_attach_request_n_response_body):
+    def test_status_code_400_gz_event_type_id(self, eventTipeId, allure_attach_request_n_response_body):
         gen_data = EventGenerator(action_type=eventTipeId)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
@@ -141,7 +141,7 @@ class TestNegAdminAdd:
         [["spisok", 1]],
         [""]
     ])
-    def test_status_code_gz_admin_id(self, adminId, allure_attach_request_n_response_body):
+    def test_status_code_400_gz_admin_id(self, adminId, allure_attach_request_n_response_body):
         gen_data = EventGenerator(admin_ids=adminId)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
@@ -156,8 +156,56 @@ class TestNegAdminAdd:
         ["spisok", 1],
         ""
     ])
-    def test_gz_ctime(self, ctime, allure_attach_request_n_response_body):
+    def test_status_code_400_gz_ctime(self, ctime, allure_attach_request_n_response_body):
         gen_data = EventGenerator(ctime=ctime)
+        admin_add = AdminAdd()
+        admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure_attach_request_n_response_body(str(gen_data.get_dict_reg_event_adm()), admin_add.response.text)
+        admin_add.check_status_code(400)
+
+    @pytest.mark.parametrize('host', [
+        "256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов "\
+            "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов "\
+                "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов S"
+        "257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов "\
+            "Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 "\
+                "Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 С",
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов "\
+            "Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov "\
+                "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 "\
+                    "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 "\
+                        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov "\
+                            "505 Символов Simvolov 505 Символов Simvolov",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_host(self, host, allure_attach_request_n_response_body):
+        gen_data = EventGenerator(ip=host)
+        admin_add = AdminAdd()
+        admin_add.send_request(gen_data.get_dict_reg_event_adm())
+        allure_attach_request_n_response_body(str(gen_data.get_dict_reg_event_adm()), admin_add.response.text)
+        admin_add.check_status_code(400)
+
+    @pytest.mark.parametrize('session_id', [
+        "256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов "\
+            "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов "\
+                "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов S"
+        "257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов "\
+            "Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 "\
+                "Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 С",
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов "\
+            "Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov "\
+                "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 "\
+                    "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 "\
+                        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov "\
+                            "505 Символов Simvolov 505 Символов Simvolov",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_session_id(self, session_id, allure_attach_request_n_response_body):
+        gen_data = EventGenerator(session_id=session_id)
         admin_add = AdminAdd()
         admin_add.send_request(gen_data.get_dict_reg_event_adm())
         allure_attach_request_n_response_body(str(gen_data.get_dict_reg_event_adm()), admin_add.response.text)
