@@ -20,7 +20,7 @@ class SerialSender:
     @allure.step("Загрузка тестовых данных из serial_sender")
     def send_requests(self, replay_count):
 
-        for num in range(0, replay_count+1):
+        for num in range(0, replay_count):
             num_request = self.var_class[self.choise_class]()
             num_payload = getattr(self.num_data, f'get_dict_reg_event_{self.choise_class}')()
             num_request.send_request(num_payload)
