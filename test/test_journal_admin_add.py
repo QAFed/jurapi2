@@ -2,11 +2,12 @@
 import allure
 import pytest
 
-from conftest import allure_attach_request_n_response_body
+from conftest import allure_attach_request_n_response_body, before_n_after_clear_db
 from generators.event_generator import EventGenerator
 from endpoints.journal_admin_add import AdminAdd
 
 @allure.suite('Test_positive_Admin_event_add')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestPosAdminAdd:
 
     @pytest.mark.parametrize('eventTipeId',[
@@ -101,6 +102,8 @@ class TestPosAdminAdd:
         admin_add.check_status_code(200)
         admin_add.compare_payload_n_response()
 
+@allure.suite('Test_negative_Admin_event_add')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestNegAdminAdd:
     @pytest.mark.parametrize('pop_param', [
         "eventTypeId",

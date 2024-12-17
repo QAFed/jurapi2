@@ -1,8 +1,11 @@
 import pytest
+import allure
+from conftest import allure_attach_request_n_response_body, before_n_after_clear_db
 from endpoints.journal_admin_get_by_filter import AdminGetByFilter
 from generators.serial_send import SerialSender
 
-
+@allure.suite('Test_positive_Admin_event_get_by_filter')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestPosAdminGetByFilter:
 
     @pytest.mark.parametrize('event_time_from',[
@@ -208,6 +211,8 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
+@allure.suite('Test_negative_Admin_event_get_by_filter')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestNegAdminGetByFilter:
 
     @pytest.mark.parametrize('event_time_from', [

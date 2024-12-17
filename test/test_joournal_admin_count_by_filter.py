@@ -1,7 +1,11 @@
 import pytest
+import allure
 from endpoints.journal_admin_count_by_filter import AdminCountByFilter
 from generators.serial_send import SerialSender
+from conftest import allure_attach_request_n_response_body, before_n_after_clear_db
 
+@allure.suite('Test_positive_Admin_event_count_by_filter')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestPosAdminCountByFilter:
 
     @pytest.mark.parametrize('event_time_from', [
@@ -163,6 +167,8 @@ class TestPosAdminCountByFilter:
         count_filter.check_status_code(200)
         count_filter.assert_count(count_iter)
 
+@allure.suite('Test_negative_Admin_event_count_by_filter')
+@pytest.mark.usefixtures('before_n_after_clear_db')
 class TestNegAdminCountByFilter:
 
     @pytest.mark.parametrize('event_time_from', [
