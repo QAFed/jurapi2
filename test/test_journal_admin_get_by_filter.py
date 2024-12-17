@@ -149,8 +149,8 @@ class TestPosAdminGetByFilter:
         get_by_filter.compare_response(serial_sender.final_page)
 
     @pytest.mark.parametrize('page_num', [
-        # 0,
-        # 1,
+        0,
+        1,
         2
     ])
     def test_gz_page_num(self, page_num, allure_attach_request_n_response_body):
@@ -165,3 +165,107 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
+    @pytest.mark.parametrize('page_size', [
+        1,
+        2,
+        3,
+        10
+    ])
+    def test_gz_page_size(self, page_size, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', page_params={'page': 0, 'pageSize': page_size})
+        serial_sender.send_requests(5)
+        serial_sender.create_custom_page()
+        get_by_filter = AdminGetByFilter()
+        get_by_filter.send_request(serial_sender.payload_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(200)
+        get_by_filter.compare_response(serial_sender.final_page)
+
+    @pytest.mark.parametrize('pop_param', [
+        'eventTimeFrom',
+        'eventTimeTo',
+        'actionType',
+        'ip',
+        'info',
+        'sortOrder',
+        'adminIds',
+        'sessionId'
+    ])
+    def test_status_code_200_if_one_param_not_send(self, pop_param, allure_attach_request_n_response_body,
+                                                   before_n_after_clear_db):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        serial_sender.create_custom_page()
+        get_by_filter = AdminGetByFilter()
+        mod_diction = serial_sender.payload_filter
+        mod_diction.pop(pop_param)
+        get_by_filter.send_request(mod_diction, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(200)
+        get_by_filter.compare_response(serial_sender.final_page)
+
+class TestNegAdminGetByFilter:
+
+    @pytest.mark.parametrize('event_time_from', [
+        4294967296,
+        104294967296,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_event_time_from(self, event_time_from, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['eventTimeFrom'] = event_time_from
+        get_by_filter.send_request(serial_sender.payload_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('event_time_to', [
+        4294967296,
+        104294967296,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_event_time_to(self, event_time_to, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['eventTimeTo'] = event_time_to
+        get_by_filter.send_request(serial_sender.payload_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('action_type', [
+        -2147483648,
+        2147483648,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_action_type(self, action_type, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['actionType'] = action_type
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)

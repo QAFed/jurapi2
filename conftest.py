@@ -1,5 +1,5 @@
 import json
-
+from endpoints.clear_db import ClearDB
 import allure
 import pytest
 
@@ -15,3 +15,10 @@ def allure_attach_request_n_response_body():
         allure.attach(response_body, name="response dody", attachment_type=allure.attachment_type.JSON)
 
     return _attach
+
+@pytest.fixture
+def before_n_after_clear_db():
+    clear_db = ClearDB()
+    clear_db.send_request()
+    yield
+    clear_db.send_request()
