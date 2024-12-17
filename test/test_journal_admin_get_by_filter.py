@@ -269,3 +269,127 @@ class TestNegAdminGetByFilter:
                                               request_params=serial_sender.page_params,
                                               status_code=get_by_filter.response.status_code)
         get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('ip', [
+        "256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов " \
+        "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов " \
+        "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов S"
+        "257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов " \
+        "Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 " \
+        "Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 С",
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов " \
+        "Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov " \
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 " \
+        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 " \
+        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov " \
+        "505 Символов Simvolov 505 Символов Simvolov",
+        {'slo': 'var'},
+        ["spisok", 1],
+        107,
+        ""
+    ])
+    def test_status_code_400_gz_ip(self, ip, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['ip'] = ip
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('sort_order', [
+        107,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_sort_order(self, sort_order, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['sortOrder'] = sort_order
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('admin_ids', [
+        [-2147483648, 2147483648],
+        [-2147483648, -2147483648, -2147483648],
+        [2147483648, 2147483648, 2147483648],
+        [],
+        [""],
+        ['', ''],
+        ["1", "2"],
+        [1, ""],
+        [[1, 2], [3, 4]],
+        [[1]],
+        [{2}],
+        [{1: "dict"}, {"2": "dict2"}]
+    ])
+    def test_status_code_400_gz_admin_ids(self, admin_ids, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['adminIds'] = admin_ids
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('session_id', [
+        "256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов " \
+        "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов " \
+        "Simvolov 256 Символов Simvolov 256 Символов Simvolov 256 Символов S"
+        "257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов " \
+        "Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 " \
+        "Символов Simvolov257 Символов Simvolov257 Символов Simvolov257 С",
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов " \
+        "Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov " \
+        "505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 " \
+        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 " \
+        "Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov 505 Символов Simvolov " \
+        "505 Символов Simvolov 505 Символов Simvolov",
+        {'slo': 'var'},
+        ["spisok", 1],
+        107,
+        ""
+    ])
+    def test_status_code_400_gz_session_id(self, session_id, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['sessionId'] = session_id
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
+
+    @pytest.mark.parametrize('sort_by', [
+        107,
+        "Cтрока Strora",
+        {'slo': 'var'},
+        ["spisok", 1],
+        ""
+    ])
+    def test_status_code_400_gz_sort_order(self, sort_by, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm')
+        serial_sender.send_requests(5)
+        get_by_filter = AdminGetByFilter()
+        mod_filter = serial_sender.payload_filter
+        mod_filter['sortBy'] = sort_by
+        get_by_filter.send_request(mod_filter, serial_sender.page_params)
+        allure_attach_request_n_response_body(str(serial_sender.payload_filter), get_by_filter.response.text,
+                                              request_params=serial_sender.page_params,
+                                              status_code=get_by_filter.response.status_code)
+        get_by_filter.check_status_code(400)
