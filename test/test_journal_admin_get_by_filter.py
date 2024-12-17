@@ -5,12 +5,12 @@ from generators.serial_send import SerialSender
 
 class TestPosAdminGetByFilter:
 
-    @pytest.mark.parametrize('eventTimeFrom',[
+    @pytest.mark.parametrize('event_time_from',[
         0,
         4294967295
     ])
-    def test_gz_event_time_from(self, eventTimeFrom, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'event_time_from':eventTimeFrom})
+    def test_gz_event_time_from(self, event_time_from, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'event_time_from':event_time_from})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
@@ -21,12 +21,12 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
-    @pytest.mark.parametrize('eventTimeTo', [
+    @pytest.mark.parametrize('event_time_to', [
         0,
         4294967295
     ])
-    def test_gz_event_time_to(self, eventTimeTo, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'event_time_to': eventTimeTo, 'event_time_from': 0})
+    def test_gz_event_time_to(self, event_time_to, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'event_time_to': event_time_to, 'event_time_from': 0})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
@@ -38,13 +38,13 @@ class TestPosAdminGetByFilter:
         get_by_filter.compare_response(serial_sender.final_page)
 
 
-    @pytest.mark.parametrize('actionType',[
+    @pytest.mark.parametrize('action_type',[
         -2147483647,
         0,
         2147483647
     ])
-    def test_gz_action_type(self, actionType, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'action_type': actionType})
+    def test_gz_action_type(self, action_type, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'action_type': action_type})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
@@ -75,12 +75,12 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
-    @pytest.mark.parametrize('sortOrder', [
+    @pytest.mark.parametrize('sort_order', [
         "asc",
         "desc"
     ])
-    def test_gz_sort_order(self, sortOrder, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'sort_order': sortOrder})
+    def test_gz_sort_order(self, sort_order, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'sort_order': sort_order})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
@@ -91,15 +91,15 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
-    @pytest.mark.parametrize('adminIds', [
+    @pytest.mark.parametrize('admin_ids', [
         [-2147483647, 0, 2147483647],
         [-2147483647, -2147483647, -2147483647],
         [2147483647, 2147483647, 2147483647],
         [0, 0, 0],
         [1, 2, 3]
     ])
-    def test_gz_admin_ids(self, adminIds, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'admin_ids': adminIds})
+    def test_gz_admin_ids(self, admin_ids, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'admin_ids': admin_ids})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
@@ -110,7 +110,7 @@ class TestPosAdminGetByFilter:
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
 
-    @pytest.mark.parametrize('sessionId', [
+    @pytest.mark.parametrize('session_id', [
         "",
         "1",
         "Aa",
@@ -118,8 +118,8 @@ class TestPosAdminGetByFilter:
         "254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Simvols 254 Cимвола Si",
         "255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255 SIMvols Символов 255"
     ])
-    def test_gz_session_id(self, sessionId, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'session_id': sessionId})
+    def test_gz_session_id(self, session_id, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'session_id': session_id})
         serial_sender.send_requests(5)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
