@@ -7,14 +7,8 @@ from generators.serial_send import SerialSender
 @allure.suite('Test_positive_Admin_event_get_by_filter')
 @pytest.mark.usefixtures('before_n_after_clear_db')
 class TestPosAdminGetByFilter:
-
-    @pytest.mark.parametrize('event_time_from',[
-        0,
-        4294967295
-    ])
-    def test_gz_event_time_from(self, event_time_from, allure_attach_request_n_response_body):
-        serial_sender = SerialSender('adm', ext_data={'event_time_from':event_time_from})
-        serial_sender.send_requests(5)
+    def ke_gz_etalon_tst(self, serial_sender, num_iterations, allure_attach_request_n_response_body):
+        serial_sender.send_requests(num_iterations)
         serial_sender.create_custom_page()
         get_by_filter = AdminGetByFilter()
         get_by_filter.send_request(serial_sender.payload_filter, serial_sender.page_params)
@@ -23,6 +17,14 @@ class TestPosAdminGetByFilter:
                                               status_code=get_by_filter.response.status_code)
         get_by_filter.check_status_code(200)
         get_by_filter.compare_response(serial_sender.final_page)
+
+    @pytest.mark.parametrize('event_time_from',[
+        0,
+        4294967295
+    ])
+    def test_gz_event_time_from(self, event_time_from, allure_attach_request_n_response_body):
+        serial_sender = SerialSender('adm', ext_data={'event_time_from':event_time_from})
+        self.ke_gz_etalon_tst(serial_sender,5, allure_attach_request_n_response_body)
 
     @pytest.mark.parametrize('event_time_to', [
         0,
