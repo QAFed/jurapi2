@@ -41,8 +41,10 @@ class SerialSender:
         len_list = len(filtered_list)
         num_page = self.page_params["page"]
         count_on_page = self.page_params["pageSize"]
-        if len_list % count_on_page == 0 or len_list // count_on_page != num_page:
-            self.final_page = filtered_list[count_on_page * num_page : count_on_page * (num_page + 1):]
+        start = count_on_page * num_page
+        end = start + count_on_page
+
+        if start >= len_list:
+            self.final_page = []
         else:
-            self.final_page = filtered_list[
-                   count_on_page * num_page:count_on_page * (num_page + 1) + len_list % count_on_page:]
+            self.final_page = filtered_list[start:end]
